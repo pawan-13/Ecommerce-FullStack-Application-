@@ -56,7 +56,7 @@ export function Login() {
       newError.email = "Email is required"
       flag = false
     }
-
+    
     if (!password || password.trim() === "") {
       newError.password = "Password is required"
       flag = false

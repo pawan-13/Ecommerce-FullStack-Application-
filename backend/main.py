@@ -1,9 +1,20 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from database.db import create_table
+from routers.auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
+
+@asynccontextmanager
+async def lifespan(app : FastAPI):
+    create_table()
+    yield
+    
+
 app = FastAPI(
     title =  "FastAPI Template",
     description= "A building Fullstack project using FastAPI and Next.js",
-    version = "1.0.0"
+    version = "1.0.0",
+    lifespan = lifespan,
 )
 
 app.add_middleware(
@@ -13,6 +24,5 @@ app.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"]
 )
-@app.get("/", status_code = status.HTTP_200_OK)
-def home():
-    return {"message": "hello world!", "status": status.HTTP_200_OK}
+
+app.include_router(auth_router)
