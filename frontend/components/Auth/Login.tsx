@@ -12,8 +12,11 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {useGetRegisterMutation} from "@/services/api"
+import {toast} from "react-toastify"
 
 export function Login() {
+  const [getRegister, {data : registerData, isLoading, isError, error: registerError}] = useGetRegisterMutation();
   const [login, setLogin] = useState({
     username: "",
     email: "",
@@ -42,7 +45,7 @@ export function Login() {
     })
   }
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { username, email, password } = login
     let flag = true
@@ -69,7 +72,9 @@ export function Login() {
 
     if (flag) {
       if(isSignup) {
-        alert("Signup successful")
+        const data = { username, email, password }
+        await getRegister(data).unwrap()
+        toast.success(registerData?.message)
         setLogin({
         username: "",
         email: "",
@@ -144,7 +149,7 @@ export function Login() {
           </div>
           <CardFooter className="flex-col gap-2">
             <Button type="submit" className="w-full">
-              {isSignup ? "Sign Up" : "Login"}
+              {isLoading ? "Loading..." : isSignup ? "Sign Up" : "Login"}
             </Button>
           </CardFooter>
         </form>
