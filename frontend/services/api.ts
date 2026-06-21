@@ -32,7 +32,16 @@ type RegisterRequest = {
   password: string,
 }
 
+type LoginRequest = {
+  email: string,
+  password: string,
+}
+
 type RegisterResponse = {
+  message: string;
+};
+
+type LoginResponse = {
   message: string;
 };
 
@@ -48,7 +57,14 @@ export const api = createApi({
         data: body,
       })
     }),
+    getLogIn : builder.mutation<LoginResponse, LoginRequest>({
+      query : (body) => ({
+        url : "/auth/login",
+        method : "POST",
+        data : body,
+      })
+    })
   }),
 });
 
-export const { useGetRegisterMutation } = api;
+export const {useGetLogInMutation ,useGetRegisterMutation } = api;

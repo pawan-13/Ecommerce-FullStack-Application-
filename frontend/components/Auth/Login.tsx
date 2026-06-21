@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {useGetRegisterMutation} from "@/services/api"
+import {useGetRegisterMutation, useGetLogInMutation} from "@/services/api"
 import {toast} from "react-toastify"
 
 export function Login() {
-  const [getRegister, {data : registerData, isLoading, isError, error: registerError}] = useGetRegisterMutation();
+  const [getRegister, {data : registerData, isLoading: registerLoading}] = useGetRegisterMutation();
+  const [getLogIn, {data : loginData, isLoading : loginLoading}] = useGetLogInMutation();
   const [login, setLogin] = useState({
     username: "",
     email: "",
@@ -82,7 +83,9 @@ export function Login() {
       })
       }
       else{
-        alert("Login successful")
+        const data = {email,password}
+        await getLogIn(data).unwrap()
+        toast.success(loginData?.message)
         setLogin({
         username: "",
         email: "",
@@ -149,7 +152,7 @@ export function Login() {
           </div>
           <CardFooter className="flex-col gap-2">
             <Button type="submit" className="w-full">
-              {isLoading ? "Loading..." : isSignup ? "Sign Up" : "Login"}
+              {registerLoading || loginLoading ? "Loading..." : isSignup ? "Sign Up" : "Login"}
             </Button>
           </CardFooter>
         </form>
