@@ -1,15 +1,16 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import axios from './axios';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import instance from './axios';
 
 // Create custom baseQuery
 const axiosBaseQuery = () => {
   return (
-    async ({ url, method, data }: any) => {
+    async ({ url, method, data, headers }: any) => {
       try {
-        const result = await axios({
+        const result = await instance({
           url,
           method,
           data,
+          headers
         });
 
         return { data: result.data };
@@ -32,11 +33,6 @@ type RegisterRequest = {
   password: string,
 }
 
-type LoginRequest = {
-  email: string,
-  password: string,
-}
-
 type RegisterResponse = {
   message: string;
 };
@@ -55,13 +51,19 @@ export const api = createApi({
         url: '/auth/signup',
         method: 'POST',
         data: body,
+        headers : {
+          'Content-Type' : "application/json"
+        }
       })
     }),
-    getLogIn : builder.mutation<LoginResponse, LoginRequest>({
-      query : (body) => ({
+    getLogIn : builder.mutation<LoginResponse, FormData>({
+      query : (formData) => ({
         url : "/auth/login",
         method : "POST",
-        data : body,
+        data : formData,
+        headers : {
+          'Content-Type' : "multipart/form-data"
+        }
       })
     })
   }),

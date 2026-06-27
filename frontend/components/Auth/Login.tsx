@@ -83,9 +83,11 @@ export function Login() {
       })
       }
       else{
-        const data = {email,password}
-        await getLogIn(data).unwrap()
-        toast.success(loginData?.message)
+        const formData = new FormData()
+        formData.append('username', email)
+        formData.append('password', password)
+        const res = await getLogIn(formData).unwrap()
+        toast.success(res?.message)
         setLogin({
         username: "",
         email: "",

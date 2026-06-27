@@ -36,6 +36,7 @@ instance.interceptors.response.use(
         // Handle response errors here
         if(error.response && error.response.status === 401){
             // Handle unauthorized access, e.g., redirect to login page
+            localStorage.removeItem('token')
             window.location.href = '/login';
         }
         return Promise.reject(error);
