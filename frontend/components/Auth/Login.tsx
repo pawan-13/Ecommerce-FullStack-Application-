@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 import {
   Card,
   CardAction,
@@ -16,6 +17,7 @@ import {useGetRegisterMutation, useGetLogInMutation} from "@/services/api"
 import {toast} from "react-toastify"
 
 export function Login() {
+  const router = useRouter()
   const [getRegister, {data : registerData, isLoading: registerLoading}] = useGetRegisterMutation();
   const [getLogIn, {data : loginData, isLoading : loginLoading}] = useGetLogInMutation();
   const [login, setLogin] = useState({
@@ -74,8 +76,8 @@ export function Login() {
     if (flag) {
       if(isSignup) {
         const data = { username, email, password }
-        await getRegister(data).unwrap()
-        toast.success(registerData?.message)
+        const res = await getRegister(data).unwrap()
+        toast.success(res?.message)
         setLogin({
         username: "",
         email: "",
@@ -88,6 +90,7 @@ export function Login() {
         formData.append('password', password)
         const res = await getLogIn(formData).unwrap()
         toast.success(res?.message)
+        router.replace('/home')
         setLogin({
         username: "",
         email: "",

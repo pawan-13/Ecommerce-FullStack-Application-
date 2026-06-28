@@ -30,12 +30,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // You can modify the response here if needed
+        localStorage.setItem('token', response?.data?.token?.access_token)
         return response;
     },
     (error) => {
         // Handle response errors here
         if(error.response && error.response.status === 401){
-            // Handle unauthorized access, e.g., redirect to login page
             localStorage.removeItem('token')
             window.location.href = '/login';
         }

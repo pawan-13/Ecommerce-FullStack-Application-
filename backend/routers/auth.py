@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from sqlmodel import Session, select
 from passlib.context import CryptContext
-from utils.utils import checkEmailPassword, create_jwt_token
+from utils.utils import checkEmailPassword, create_jwt_token , create_refresh_token
 from database.db import get_session
 from models.authModel import userSignUp, userDetails
 
@@ -43,7 +43,7 @@ async def signup(userReq : userDetails, session : Session = Depends(get_session)
 
     return {"message" : "User created successfully", "user" : user}
 
-@router.post("/login", status_code = status.HTTP_201_CREATED)
+@router.post("/login", status_code = status.HTTP_200_OK)
 async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], session : Session = Depends(get_session)):
     email = credentials.username
     password = credentials.password
@@ -53,12 +53,13 @@ async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], s
     if not authorized_user:
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid Credientials")
     
-    # Generate a Token
     data = {
         "sub" : authorized_user.email,
         "id" : authorized_user.id,
         "name" : authorized_user.username
-
     }
-    token = create_jwt_token(data, timedelta(minutes = 15))
-    return {"message" : "User login successfully", "user" : data, "token" : token}
+    #access Generate a Token
+    accesstoken = create_jwt_token(data, timedelta(minutes = 15))
+    #refresh Access Token
+    refreshtoken = create_refresh_token(data, timedelta(days = 7))
+    return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
