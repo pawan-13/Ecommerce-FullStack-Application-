@@ -4,11 +4,11 @@ from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from sqlmodel import Session, select
 from passlib.context import CryptContext
-from utils.utils import checkEmailPassword, create_jwt_token , create_refresh_token
+from utils.utils import checkEmailPassword, create_jwt_token , create_refresh_token, verify_token
 from database.db import get_session
 from models.authModel import userSignUp, userDetails
 
-
+auth_user_dependency = Annotated[dict, Depends(verify_token)]
 pwd = CryptContext(schemes = ["pbkdf2_sha256"], deprecated = "auto")
 
 def encrypt_password(password : str) -> str:
@@ -63,3 +63,7 @@ async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], s
     #refresh Access Token
     refreshtoken = create_refresh_token(data, timedelta(days = 7))
     return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
+
+@router.get("/isUserValid", status_code = status.HTTP_200_OK)
+async def isUserValid(user:auth_user_dependency):
+    return {"message" : "User is Logged in", "isUserValid" : True}

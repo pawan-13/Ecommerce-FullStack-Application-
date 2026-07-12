@@ -1,4 +1,7 @@
 from datetime import datetime, timedelta, timezone
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from typing import Annotated
 from sqlmodel import Session,select
 from passlib.context import CryptContext
 from models.authModel import userSignUp
@@ -51,3 +54,20 @@ def create_refresh_token(data:dict, expire_time = timedelta):
     refresh_token = jwt.encode(claims=to_encode, key=Secret_key, algorithm=JWT_Algorithum)
 
     return {"refresh_token" : refresh_token, "token_type" : "bearer"}
+
+#Token validation
+def validate_token(token:str):
+    try:
+        payload = jwt.decode(token, key= Secret_key, algorithms=JWT_Algorithum)
+        return payload
+    except JWTError:
+         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid token")
+    
+oAuth2_bearer = OAuth2PasswordBearer(tokenUrl = "/auth/login")
+def verify_token(token:Annotated[str, Depends(oAuth2_bearer)]):
+    payload = validate_token(token)
+    email = payload.get("sub")
+    if email is None:
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    return payload
+    

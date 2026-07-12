@@ -30,14 +30,14 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // You can modify the response here if needed
-        localStorage.setItem('token', response?.data?.token?.access_token)
+        localStorage.setItem('token', response?.data?.accesstoken?.access_token)
         return response;
     },
     (error) => {
         // Handle response errors here
         if(error.response && error.response.status === 401){
             localStorage.removeItem('token')
-            window.location.href = '/login';
+            window.location.href = '/';
         }
         return Promise.reject(error);
     }
