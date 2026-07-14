@@ -68,6 +68,6 @@ def verify_token(token:Annotated[str, Depends(oAuth2_bearer)]):
     payload = validate_token(token)
     email = payload.get("sub")
     if email is None:
-        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail="Token payload missing subject")
     return payload
     

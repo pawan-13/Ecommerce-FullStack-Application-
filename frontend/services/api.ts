@@ -41,6 +41,11 @@ type LoginResponse = {
   message: string;
 };
 
+type isUserValidResponse = {
+  message : string,
+  isUserValid : boolean
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery(),

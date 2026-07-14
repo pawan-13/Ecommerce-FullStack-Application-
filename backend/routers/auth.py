@@ -63,7 +63,3 @@ async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], s
     #refresh Access Token
     refreshtoken = create_refresh_token(data, timedelta(days = 7))
     return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
-
-@router.get("/isUserValid", status_code = status.HTTP_200_OK)
-async def isUserValid(user:auth_user_dependency):
-    return {"message" : "User is Logged in", "isUserValid" : True}
