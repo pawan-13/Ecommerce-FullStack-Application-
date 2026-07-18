@@ -1,6 +1,7 @@
 'use client'
 
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const instance = axios.create({
     baseURL : process.env.NEXT_PUBLIC_BASEURL,
@@ -14,7 +15,7 @@ export default instance;
 instance.interceptors.request.use(
     (config) => {
         // You can modify the request config here if needed
-        const token = localStorage.getItem('token');
+        const token = Cookies.get('token');
 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -30,7 +31,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // You can modify the response here if needed
-        localStorage.setItem('token', response?.data?.accesstoken?.access_token)
+        Cookies.set('token', response?.data?.accesstoken?.access_token)
         return response;
     },
     (error) => {

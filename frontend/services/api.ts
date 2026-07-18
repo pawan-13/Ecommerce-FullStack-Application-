@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import instance from './axios';
+import { loginSuccess } from '../redux/feature/loginSlice';
 
 // Create custom baseQuery
 const axiosBaseQuery = () => {
@@ -38,13 +39,9 @@ type RegisterResponse = {
 };
 
 type LoginResponse = {
+  user: object;
   message: string;
 };
-
-type isUserValidResponse = {
-  message : string,
-  isUserValid : boolean
-}
 
 export const api = createApi({
   reducerPath: 'api',
@@ -69,7 +66,16 @@ export const api = createApi({
         headers : {
           'Content-Type' : "multipart/form-data"
         }
-      })
+      }),
+      async onQueryStarted(_, {dispatch,queryFulfilled}){
+        try{
+          const result = await queryFulfilled;
+          dispatch(loginSuccess({user : result.data.user, isLoggedIn :  true}))
+        }catch(err){
+          console.log("Error in login mutation", err)
+        }
+
+      }
     })
   }),
 });
