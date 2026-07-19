@@ -1,7 +1,9 @@
+import Home from "./Home"
+
 const page = () => {
   return (
     <div>
-        <p>Hello yha kase ho bhai</p>
+        <Home/>
     </div>
   )
 }

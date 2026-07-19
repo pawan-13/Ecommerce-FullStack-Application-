@@ -10,7 +10,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       {isLoggedIn && <Header />}
-      <main className="flex-1">{children}</main>
+      <main>{children}</main>
     </div>
   );
 }
