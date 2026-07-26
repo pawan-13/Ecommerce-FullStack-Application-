@@ -1,5 +1,6 @@
 import Image from "next/image"
 import homeBanner from "@/public/Assets/homebanner.png"
+import Counter from "@/components/Home/Counter"
 
 const Home = () => {
   return (
@@ -18,7 +19,7 @@ const Home = () => {
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
           <div className="relative max-w-7xl mx-auto p-5 flex flex-col items-start pb-24 min-h-96">
             <div>
-              <h1 className="font-bold scale-y-125 my-20 text-white leading-22 mb-10 tracking-tight uppercase text-[clamp(3.5rem,6vw,5rem)]">
+              <h1 className="font-bold scale-y-125 my-16 text-white leading-22 mb-12 tracking-tight uppercase text-[clamp(3.5rem,6vw,5rem)]">
                 Form
                 <br />
                 <span className="font-bold text-[#C9A84C]">FOLLOWS</span>
@@ -27,9 +28,18 @@ const Home = () => {
               </h1>
             </div>
             <div>
-              <p className="text-lg max-w-md text-slate-300">Considered pieces from the world's most intentional designers. Built to last, worn to age.</p>
+              <p className="text-lg max-w-md text-slate-300 mb-8">Considered pieces from the world's most intentional designers. Built to last, worn to age.</p>
+            </div>
+            <div className="flex items-center gap-3 cursor-pointer">
+              <button className="bg-[#C9A84C] text-black font-semibold text-sm py-3 w-36 hover:bg-[#a88a3a] transition-colors duration-300">
+                Shop Now
+              </button>
+              <button className="bg-transparent border border-slate-300  text-white font-semibold text-sm py-3 w-28 hover:border hover:border-[#C9A84C] transition-colors duration-300">
+                New In
+              </button>
             </div>
           </div>
+          <Counter />
         </section>
       </main>
     </div>

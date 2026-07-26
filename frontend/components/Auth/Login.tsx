@@ -1,8 +1,8 @@
 'use client'
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
@@ -152,8 +152,8 @@ export function Login() {
                   {error.password && <span className="text-red-500 text-base">{error.password}</span>}
                 </div>
               </div>
-              <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full">
+              <CardFooter>
+                <Button type="submit" className="w-full h-10 bg-black font-semibold text-white transition-colors duration-300">
                   {registerLoading || loginLoading ? "Loading..." : isSignup ? "Sign Up" : "Login"}
                 </Button>
               </CardFooter>
