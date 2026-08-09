@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import instance from './axios';
 import { loginSuccess } from '../redux/feature/loginSlice';
+import { LoginResponse, RegisterRequest, RegisterResponse } from '@/types/type';
 
 // Create custom baseQuery
 const axiosBaseQuery = () => {
@@ -27,21 +28,6 @@ const axiosBaseQuery = () => {
     }
   )
 }
-
-type RegisterRequest = {
-  username: string,
-  email: string,
-  password: string,
-}
-
-type RegisterResponse = {
-  message: string;
-};
-
-type LoginResponse = {
-  user: object;
-  message: string;
-};
 
 export const api = createApi({
   reducerPath: 'api',

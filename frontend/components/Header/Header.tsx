@@ -10,8 +10,10 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-export default function Header() {
+import { useSelector } from "react-redux";
 
+export default function Header() {
+  const userdata = useSelector((state:any)=> state.login.user)
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-5">
@@ -22,7 +24,7 @@ export default function Header() {
             </button>
 
             <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500 text-xl font-bold text-white shadow-lg">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-r from-indigo-500 via-violet-500 to-pink-500 text-xl font-bold text-white shadow-lg">
                 S
               </div>
 
@@ -88,13 +90,13 @@ export default function Header() {
             </button>
 
             <button className="hidden items-center gap-3 rounded-full border border-white/10 bg-white/5 px-2 py-2 transition hover:bg-white/10 md:flex">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-indigo-500 to-purple-500 text-white">
                 <User size={18} />
               </div>
 
               <div className="text-left">
                 <p className="text-sm font-medium text-white">
-                  Hello, John
+                  Hello, {userdata?.name.slice(0,1).toUpperCase() + userdata?.name?.slice(1)}
                 </p>
 
                 <p className="text-xs text-slate-400">
@@ -138,7 +140,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          <div className="rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-lg">
+          <div className="rounded-full bg-linear-to-r from-indigo-500 to-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-lg">
             🔥 Summer Sale 50% OFF
           </div>
         </div>
