@@ -63,3 +63,20 @@ async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], s
     #refresh Access Token
     refreshtoken = create_refresh_token(data, timedelta(days = 7))
     return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
+
+@router.post("/refresh", status_code = status.HTTP_200_OK)
+async def refresh_token(token : str):
+    try:
+        payload = verify_token(token)
+
+        data = {
+            "sub" : payload.get("email"),
+            "id" : payload.get("id"),
+            "name" : payload.get("username")
+        }
+
+        #access Generate a Token
+        accesstoken = create_jwt_token(data, timedelta(minutes  = 15))
+        return {"message" : "Token refreshed successfully", "accesstoken" : accesstoken}
+    except :
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid token")
