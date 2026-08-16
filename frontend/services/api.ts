@@ -62,8 +62,18 @@ export const api = createApi({
         }
 
       }
+    }),
+    getAccessToken : builder.mutation({
+      query : () => ({
+        url : '/auth/refresh',
+        method :  'POST',
+        headers  : {
+          'Content-Type' : "application/json"
+        }
+
+      })
     })
   }),
 });
 
-export const {useGetLogInMutation ,useGetRegisterMutation } = api;
+export const {useGetLogInMutation ,useGetRegisterMutation, useGetAccessTokenMutation } = api;

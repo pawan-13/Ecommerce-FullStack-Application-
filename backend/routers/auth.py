@@ -1,5 +1,5 @@
 from datetime import timedelta
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 from sqlmodel import Session, select
@@ -44,7 +44,7 @@ async def signup(userReq : userDetails, session : Session = Depends(get_session)
     return {"message" : "User created successfully", "user" : user}
 
 @router.post("/login", status_code = status.HTTP_200_OK)
-async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], session : Session = Depends(get_session)):
+async def login( response : Response, credentials : Annotated[OAuth2PasswordRequestForm, Depends()], session : Session = Depends(get_session)):
     email = credentials.username
     password = credentials.password
 
@@ -62,13 +62,26 @@ async def login(credentials : Annotated[OAuth2PasswordRequestForm, Depends()], s
     accesstoken = create_jwt_token(data, timedelta(minutes = 15))
     #refresh Access Token
     refreshtoken = create_refresh_token(data, timedelta(days = 7))
+
+    response.set_cookie(
+        key = "refresh_token",
+        value = refreshtoken,
+        httponly = True,
+        secure =  True,
+        max_age = 7 * 24 * 60 * 60,
+        path ="/"
+    )
+
     return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
+    
 
 @router.post("/refresh", status_code = status.HTTP_200_OK)
-async def refresh_token(token : str):
+async def refresh_token(request : Request):
+    token = request.cookies.get("refresh_token")
+    if not token:
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Refresh token not found")
     try:
         payload = verify_token(token)
-
         data = {
             "sub" : payload.get("email"),
             "id" : payload.get("id"),
@@ -80,3 +93,7 @@ async def refresh_token(token : str):
         return {"message" : "Token refreshed successfully", "accesstoken" : accesstoken}
     except :
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid token")
+
+@router.post("/logout", status_code = status.HTTP_204_NO_CONTENT)
+async def logout(response  : Response):
+    response.delete_cookie(key = "refresh_token", path = "/")

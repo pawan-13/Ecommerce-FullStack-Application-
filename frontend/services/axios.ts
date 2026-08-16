@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 
 const instance = axios.create({
     baseURL : process.env.NEXT_PUBLIC_BASEURL,
+    withCredentials : true,
     headers : {
         "Content-Type" : "application/json",
     },
@@ -37,7 +38,7 @@ instance.interceptors.response.use(
     (error) => {
         // Handle response errors here
         if(error.response && error.response.status === 401){
-            localStorage.removeItem('token')
+            Cookies.remove('token');
             window.location.href = '/';
         }
         return Promise.reject(error);
