@@ -94,6 +94,7 @@ async def refresh_token(request : Request):
     except :
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Invalid token")
 
-@router.post("/logout", status_code = status.HTTP_204_NO_CONTENT)
+@router.post("/logout", status_code = status.HTTP_200_OK)
 async def logout(response  : Response):
     response.delete_cookie(key = "refresh_token", path = "/")
+    return {"message" : "User logged out successfully"}

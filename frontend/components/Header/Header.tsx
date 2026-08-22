@@ -8,12 +8,38 @@ import {
   Menu,
   Bell,
   ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { profileData } from "@/constant/constant"
+import { useState } from "react";
+import { useGetLogoutMutation } from "@/services/api"
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation"
+import {logoutSuccess} from "@/redux/feature/loginSlice"
 
 export default function Header() {
-  const userdata = useSelector((state:any)=> state.login.user)
+  const userdata = useSelector((state: any) => state.login.user)
+  const dispatch = useDispatch();
+  const [isprofileOpen, setIsProfileOpen] = useState<boolean>(false);
+  const [getlogout] = useGetLogoutMutation();
+  const router = useRouter();
+
+  const handleLogout = async (item: any) => {
+    if (item?.name === "Logout") {
+      try {
+        const logout = await getlogout({}).unwrap();
+        dispatch(logoutSuccess(false));
+        toast.success(logout?.message);
+        router.push('/');
+      }
+      catch(err:any){
+        toast.error(err?.message);
+      }
+      
+    }
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-5">
@@ -73,13 +99,13 @@ export default function Header() {
               </span>
             </button>
 
-            <button className="relative hidden rounded-xl border border-white/10 p-3 text-white transition hover:bg-white/10 md:block">
+            {/* <button className="relative hidden rounded-xl border border-white/10 p-3 text-white transition hover:bg-white/10 md:block">
               <Bell size={21} />
 
               <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
                 5
               </span>
-            </button>
+            </button> */}
 
             <button className="relative rounded-xl border border-white/10 p-3 text-white transition hover:bg-white/10">
               <ShoppingCart size={21} />
@@ -89,23 +115,42 @@ export default function Header() {
               </span>
             </button>
 
-            <button className="hidden items-center gap-3 rounded-full border border-white/10 bg-white/5 px-2 py-2 transition hover:bg-white/10 md:flex">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-indigo-500 to-purple-500 text-white">
-                <User size={18} />
-              </div>
+            <div className="relative hidden md:block">
+              <button className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-2 py-2 transition hover:bg-white/10 cursor-pointer" onClick={() => setIsProfileOpen(!isprofileOpen)}>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-r from-indigo-500 to-purple-500 text-white">
+                  <User size={18} />
+                </div>
 
-              <div className="text-left">
-                <p className="text-sm font-medium text-white">
-                  Hello, {userdata?.name.slice(0,1).toUpperCase() + userdata?.name?.slice(1)}
-                </p>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">
+                    Hello, {userdata?.name.slice(0, 1).toUpperCase() + userdata?.name?.slice(1)}
+                  </p>
+                </div>
 
-                <p className="text-xs text-slate-400">
-                  Premium Member
-                </p>
-              </div>
+                {isprofileOpen ? <ChevronUp className="mr-2 text-slate-400" size={18} /> : <ChevronDown className="mr-2 text-slate-400" size={18} />}
+              </button>
 
-              <ChevronDown className="mr-2 text-slate-400" size={18} />
-            </button>
+              {
+                isprofileOpen && (
+                  <div className="absolute right-0 top-full mt-1 min-w-full text-center rounded-xl border border-indigo-400/20 bg-indigo-950/90 p-2 text-sm text-slate-100 shadow-2xl shadow-indigo-950/40 backdrop-blur-xl">
+                    <ul className="space-y-1">
+                      {
+                        profileData?.map((item, index) => (
+                          <li key={index} onClick={() => handleLogout(item)}>
+                            <Link
+                              href={item?.link}
+                              className="block rounded-lg px-3 py-2 text-left transition hover:bg-indigo-500/20 hover:text-white"
+                            >
+                              {item?.name}
+                            </Link>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                )
+              }
+            </div>
           </div>
         </div>
 
