@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import instance from './axios';
-import { loginSuccess } from '../redux/feature/loginSlice';
+import { loginSuccess, logoutSuccess } from '../redux/feature/loginSlice';
 import { LoginResponse, RegisterRequest, RegisterResponse } from '@/types/type';
 
 // Create custom baseQuery
@@ -57,8 +57,9 @@ export const api = createApi({
         try{
           const result = await queryFulfilled;
           dispatch(loginSuccess({user : result.data.user, isLoggedIn :  true}))
-        }catch(err){
-          console.log("Error in login mutation", err)
+        }
+        catch(err:any){
+          console.log("Error in login mutation", err.message)
         }
 
       }
@@ -80,7 +81,15 @@ export const api = createApi({
         headers : {
           'Content-Type' : "application/json"
         }
-      })
+      }),
+      async onQueryStarted(_, {dispatch}){
+        try{
+          dispatch(logoutSuccess({user : null, isLoggedIn : false}))
+        }
+        catch(err:any){
+          console.log("Error in logout mutation", err.message)
+        }
+      }
     })
   }),
 });

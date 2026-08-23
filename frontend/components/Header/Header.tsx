@@ -11,17 +11,15 @@ import {
   ChevronUp,
 } from "lucide-react";
 
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { profileData } from "@/constant/constant"
 import { useState } from "react";
 import { useGetLogoutMutation } from "@/services/api"
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation"
-import {logoutSuccess} from "@/redux/feature/loginSlice"
 
 export default function Header() {
   const userdata = useSelector((state: any) => state.login.user)
-  const dispatch = useDispatch();
   const [isprofileOpen, setIsProfileOpen] = useState<boolean>(false);
   const [getlogout] = useGetLogoutMutation();
   const router = useRouter();
@@ -30,7 +28,6 @@ export default function Header() {
     if (item?.name === "Logout") {
       try {
         const logout = await getlogout({}).unwrap();
-        dispatch(logoutSuccess(false));
         toast.success(logout?.message);
         router.push('/');
       }
@@ -132,7 +129,7 @@ export default function Header() {
 
               {
                 isprofileOpen && (
-                  <div className="absolute right-0 top-full mt-1 min-w-full text-center rounded-xl border border-indigo-400/20 bg-indigo-950/90 p-2 text-sm text-slate-100 shadow-2xl shadow-indigo-950/40 backdrop-blur-xl">
+                  <div className="absolute right-0 top-full mt-1 min-w-full text-center rounded-xl border border-white/10 bg-white/30 p-2 text-sm text-slate-100 shadow-2xl shadow-indigo-950/40 backdrop-blur-xl">
                     <ul className="space-y-1">
                       {
                         profileData?.map((item, index) => (

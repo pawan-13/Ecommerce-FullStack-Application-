@@ -41,6 +41,11 @@ const Home = () => {
           </div>
           <Counter />
         </section>
+
+        <section>
+           <div>
+           </div>
+        </section>
       </main>
     </div>
   )

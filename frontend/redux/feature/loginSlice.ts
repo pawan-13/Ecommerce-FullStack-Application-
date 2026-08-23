@@ -15,8 +15,8 @@ const loginSlice = createSlice({
             state.user = action.payload.user;
         },
         logoutSuccess: (state, action) => {
-            state.isLoggedIn = action.payload;
-            state.user = null;
+            state.isLoggedIn = action.payload.isLoggedIn;
+            state.user = action.payload.user;
         }
     }
 })
