@@ -29,7 +29,7 @@ export default function Header() {
       try {
         const logout = await getlogout({}).unwrap();
         toast.success(logout?.message);
-        router.push('/');
+        router.replace('/');
       }
       catch(err:any){
         toast.error(err?.message);

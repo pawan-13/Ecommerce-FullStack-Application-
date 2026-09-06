@@ -1,6 +1,7 @@
 import Image from "next/image"
 import homeBanner from "@/public/Assets/homebanner.png"
 import Counter from "@/components/Home/Counter"
+import Category from "@/components/Home/Category"
 
 const Home = () => {
   return (
@@ -42,8 +43,11 @@ const Home = () => {
           <Counter />
         </section>
 
-        <section>
+        <section  style={{
+              background: 'linear-gradient(90deg, rgba(0,0,0,0.92) 8%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.68) 50%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.82) 85%, rgba(0,0,0,0.92) 100%)'
+            }}>
            <div>
+            <Category/>
            </div>
         </section>
       </main>
