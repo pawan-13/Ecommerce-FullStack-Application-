@@ -1,8 +1,8 @@
 import {profileUIData,categoryData} from "@/types/type"
-import image1 from "@/public/Assets/category1.avif"
-import image2 from "@/public/Assets/category2.avif"
-import image3 from "@/public/Assets/category3.avif"
-import image4 from "@/public/Assets/category4.avif"
+import image1 from "@/public/Assets/category1.png"
+import image2 from "@/public/Assets/category2.png"
+import image3 from "@/public/Assets/category3.png"
+import image4 from "@/public/Assets/category4.png"
 export const profileData : profileUIData[] = [
     { 
         "name" : "My Account", 

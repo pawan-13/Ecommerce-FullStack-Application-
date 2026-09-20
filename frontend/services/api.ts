@@ -32,7 +32,6 @@ const axiosBaseQuery = () => {
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['Example'],
   endpoints: (builder) => ({
     getRegister: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (body) => ({
