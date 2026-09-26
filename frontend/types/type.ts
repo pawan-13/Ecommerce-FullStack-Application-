@@ -25,3 +25,14 @@ export type categoryData = {
   pieces: string;
   image: StaticImageData;
 }
+
+export type featureProductsData = {
+  id: number;
+  bname: string;
+  pname: string;
+  price: string;
+  rating: string;
+  reviews: string;
+  viewproduct: string;
+  image: string;
+}

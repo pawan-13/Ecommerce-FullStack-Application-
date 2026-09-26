@@ -1,12 +1,12 @@
 import Image from "next/image"
 import homeBanner from "@/public/Assets/homebanner.png"
-import Counter from "@/components/Home/Counter"
-import Category from "@/components/Home/Category"
+import Counter from "@/components/Home/Counter/Counter"
+import Category from "@/components/Home/Category/Category"
+import FeatureProducts from "@/components/Home/FeatureProducts/FeatureProducts"
 
 const Home = () => {
   return (
     <div>
-      {/* Hero Banner Section */}
       <main className="flex-1">
         <section className="relative overflow-hidden min-h-screen">
           <Image className="absolute h-full inset-0 w-full opacity-45 object-cover" src={homeBanner} alt="Hero Banner" />
@@ -43,12 +43,17 @@ const Home = () => {
           <Counter />
         </section>
 
-        <section  style={{
+        <section className="bg-linear-to-t from-black/30 via-transparent to-transparent"
+            style={{
               background: 'linear-gradient(90deg, rgba(0,0,0,0.92) 8%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.68) 50%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.82) 85%, rgba(0,0,0,0.92) 100%)'
             }}>
-           <div>
-            <Category/>
-           </div>
+          <div>
+            <Category />
+          </div>
+        </section>
+
+        <section className="bg-linear-to-t bg-black/90">
+          <FeatureProducts />
         </section>
       </main>
     </div>
