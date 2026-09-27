@@ -1,18 +1,20 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { api } from './api';
 import loginReducer from '../redux/feature/loginSlice';
+import wishlistReducer from "@/redux/feature/wishlistSlice";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['login'],
+  whitelist: ['login', 'wishlist'],
 };
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   login: loginReducer,
+  wishlist: wishlistReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

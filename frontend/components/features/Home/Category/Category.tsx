@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { CategoryData } from "@/constant/constant"
+import { CategoryData } from "@/utils/constant/constant"
 
 const Category = () => {
   return (

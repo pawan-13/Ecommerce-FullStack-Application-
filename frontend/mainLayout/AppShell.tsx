@@ -1,7 +1,7 @@
 "use client";
 import type { ReactNode } from "react";
 import { useSelector } from "react-redux";
-import Header from "../components/Header/Header";
+import Header from "../components/layout/Header/Header";
 import type { RootState } from "../services/store";
 
 export default function AppShell({ children }: { children: ReactNode }) {

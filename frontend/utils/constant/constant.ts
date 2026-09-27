@@ -60,7 +60,7 @@ export const FeatureProductsData: featureProductsData[] = [
         "rating": "4.8",
         "reviews": "(144)",
         "viewproduct": "View Product",
-        "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1000&auto=format&fit=crop"
+        "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop"
     },
     {
         "id": 3,
@@ -80,6 +80,6 @@ export const FeatureProductsData: featureProductsData[] = [
         "rating": "4.5",
         "reviews": "(144)",
         "viewproduct": "View Product",
-        "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=1000&auto=format&fit=crop"
+        "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1000&auto=format&fit=crop"
     }
 ]

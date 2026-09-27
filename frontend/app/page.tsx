@@ -1,9 +1,9 @@
-import { Login } from "@/components/Auth/Login"
+import { Login } from "@/components/features/Auth/Login"
 
 const page = () => {
   return (
     <div>
-      <Login />
+      <Login/>
     </div>
   )
 }

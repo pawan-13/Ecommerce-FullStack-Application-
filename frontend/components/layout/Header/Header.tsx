@@ -6,20 +6,21 @@ import {
   Search,
   User,
   Menu,
-  Bell,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
 
-import {useSelector } from "react-redux";
-import { profileData } from "@/constant/constant"
+import { useSelector } from "react-redux";
+import { profileData } from "@/utils/constant/constant"
 import { useState } from "react";
 import { useGetLogoutMutation } from "@/services/api"
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation"
+import { featureProductsData } from "@/types/type";
 
 export default function Header() {
   const userdata = useSelector((state: any) => state.login.user)
+  const wishlistdata = useSelector((state: { wishlist: { wishlist: featureProductsData[] } }) => state.wishlist.wishlist);
   const [isprofileOpen, setIsProfileOpen] = useState<boolean>(false);
   const [getlogout] = useGetLogoutMutation();
   const router = useRouter();
@@ -31,10 +32,10 @@ export default function Header() {
         toast.success(logout?.message);
         router.replace('/');
       }
-      catch(err:any){
+      catch (err: any) {
         toast.error(err?.message);
       }
-      
+
     }
   }
   return (
@@ -89,11 +90,12 @@ export default function Header() {
             </button>
 
             <button className="relative rounded-xl border border-white/10 p-3 text-white transition hover:bg-white/10">
-              <Heart size={21} />
-
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-[10px] font-bold text-white">
-                2
-              </span>
+              <Link href="/wishlist">
+                <Heart size={21} />
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-pink-500 text-[10px] font-bold text-white">
+                  {wishlistdata.length}
+                </span>
+              </Link>
             </button>
 
             {/* <button className="relative hidden rounded-xl border border-white/10 p-3 text-white transition hover:bg-white/10 md:block">

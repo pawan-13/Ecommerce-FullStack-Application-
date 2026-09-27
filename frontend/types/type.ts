@@ -36,3 +36,7 @@ export type featureProductsData = {
   viewproduct: string;
   image: string;
 }
+
+export interface WishlistState {
+    wishlist: featureProductsData[];
+}

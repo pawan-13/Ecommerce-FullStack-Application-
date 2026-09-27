@@ -1,8 +1,8 @@
 import Image from "next/image"
 import homeBanner from "@/public/Assets/homebanner.png"
-import Counter from "@/components/Home/Counter/Counter"
-import Category from "@/components/Home/Category/Category"
-import FeatureProducts from "@/components/Home/FeatureProducts/FeatureProducts"
+import Counter from "@/components/features/Home/Counter/Counter"
+import Category from "@/components/features/Home/Category/Category"
+import FeatureProducts from "@/components/features/Home/FeatureProducts/FeatureProducts"
 
 const Home = () => {
   return (
