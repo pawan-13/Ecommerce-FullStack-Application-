@@ -3,6 +3,8 @@ import homeBanner from "@/public/Assets/homebanner.png"
 import Counter from "@/components/features/Home/Counter/Counter"
 import Category from "@/components/features/Home/Category/Category"
 import FeatureProducts from "@/components/features/Home/FeatureProducts/FeatureProducts"
+import Link from "next/link"
+import editpic from "@/public/Assets/editorialdressing.png"
 
 const Home = () => {
   return (
@@ -44,9 +46,9 @@ const Home = () => {
         </section>
 
         <section className="bg-linear-to-t from-black/30 via-transparent to-transparent"
-            style={{
-              background: 'linear-gradient(90deg, rgba(0,0,0,0.92) 8%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.68) 50%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.82) 85%, rgba(0,0,0,0.92) 100%)'
-            }}>
+          style={{
+            background: 'linear-gradient(90deg, rgba(0,0,0,0.92) 8%, rgba(0,0,0,0.82) 15%, rgba(0,0,0,0.72) 40%, rgba(0,0,0,0.68) 50%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.82) 85%, rgba(0,0,0,0.92) 100%)'
+          }}>
           <div>
             <Category />
           </div>
@@ -54,6 +56,55 @@ const Home = () => {
 
         <section className="bg-linear-to-t bg-black/90">
           <FeatureProducts />
+        </section>
+
+        <section className="w-full min-h-screen bg-[#0f0f0f] text-white flex items-center justify-center p-4 md:p-8">
+          <div className="max-w-350 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
+            <div className="w-full relative overflow-hidden rounded-sm">
+              <Image
+                src={editpic}
+                alt="Woman with sunglasses and tattoos"
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
+            <div className="flex flex-col p-5 bg-[#141414] justify-center max-w-xl mx-auto lg:mx-0">
+              <p className="text-[#bfa054] text-xs font-bold tracking-[0.2em] uppercase mb-6">
+                Editorial &nbsp;·&nbsp; SS26
+              </p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.1] tracking-tight mb-8">
+                The Art of <br />
+                <span className="text-[#bfa054]">Considered</span> <br />
+                Dressing
+              </h1>
+              <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
+                Our SS26 lookbook explores the space between restraint and expression — how a single garment can anchor a life well lived.
+              </p>
+              <ul className="space-y-4 mb-10">
+                <li className="flex items-start gap-4 text-gray-300 text-sm md:text-base">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bfa054] mt-2 shrink-0"></span>
+                  <span>No trend-chasing. Only enduring design.</span>
+                </li>
+                <li className="flex items-start gap-4 text-gray-300 text-sm md:text-base">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bfa054] mt-2 shrink-0"></span>
+                  <span>Direct relationships with 68+ independent studios.</span>
+                </li>
+                <li className="flex items-start gap-4 text-gray-300 text-sm md:text-base">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#bfa054] mt-2 shrink-0"></span>
+                  <span>Climate-neutral shipping on every order.</span>
+                </li>
+              </ul>
+              <Link
+                href="#"
+                className="group inline-flex items-center gap-2 text-[#bfa054] text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors duration-300"
+              >
+                Explore The Story
+                <span className="transform group-hover:translate-x-1 transition-transform duration-300">
+                  →
+                </span>
+              </Link>
+
+            </div>
+          </div>
         </section>
       </main>
     </div>

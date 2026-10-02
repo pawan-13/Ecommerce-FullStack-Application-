@@ -1,7 +1,9 @@
 'use client';
 import { Heart, ArrowRight } from 'lucide-react';
+import {useRouter} from 'next/navigation';
 
 const WishListEmpty = () => {
+  const router = useRouter();
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-yellow-500/30">
       <div className="max-w-350 mx-auto px-6 py-8 md:px-10 md:py-12">        
@@ -37,7 +39,7 @@ const WishListEmpty = () => {
             Save pieces you love and come back to them anytime.
           </p>
 
-          <button className="bg-[#d4b055] hover:bg-[#c2a04d] text-black text-xs md:text-sm font-bold uppercase tracking-widest px-8 py-4 transition-colors duration-200 flex items-center gap-2 group">
+          <button className="bg-[#d4b055] hover:bg-[#c2a04d] text-black text-xs md:text-sm font-bold cursor-pointer uppercase tracking-widest px-8 py-4 transition-colors duration-200 flex items-center gap-2 group" onClick ={() => router.push('/home')}>
             Explore The Collection
             <ArrowRight 
               className="w-4 h-4 group-hover:translate-x-1 transition-transform" 

@@ -72,7 +72,7 @@ async def login( response : Response, credentials : Annotated[OAuth2PasswordRequ
         path ="/"
     )
 
-    return {"message" : "User login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
+    return {"message" : "login successfully", "user" : data, "accesstoken" : accesstoken, "refreshtoken" : refreshtoken}
     
 
 @router.post("/refresh", status_code = status.HTTP_200_OK)
